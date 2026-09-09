@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio Imobiliário - Cambur</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(180deg, #f35b04 0%, #ff0033 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 15px 40px 15px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .header {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin: 15px 0 5px 10px;
+            opacity: 0.9;
+        }
+
+        /* Botões Estilo Linktree da Imagem */
+        .btn {
+            background-color: #1e2869;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 18px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: transform 0.1s ease, background-color 0.2s ease;
+            cursor: pointer;
+            border: none;
+            width: 100%;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+            background-color: #151d4d;
+        }
+
+        .btn-back {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .view {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- TELA 1: LISTA DE EMPREENDIMENTOS -->
+        <div id="view-home" class="view">
+            <div class="header">
+                <h1>Lançamentos & Portfólio</h1>
+            </div>
+
+            <div class="section-title">Lançamentos / Em Obras</div>
+            <button class="btn" onclick="openProject('marques')">Marquês by Cambur</button>
+            <button class="btn" onclick="openProject('arts-jockey')">Arts Jockey Butantã</button>
+            <button class="btn" onclick="openProject('pilarys')">Pilarys Jd. Guedala</button>
+            <button class="btn" onclick="openProject('vista')">Vista Jd. Guedala</button>
+            <button class="btn" onclick="openProject('galleria')">Galleria SP Centro</button>
+
+            <div class="section-title">Entregues</div>
+            <button class="btn" onclick="openProject('yellow')">Yellow SP Jd. Guedala</button>
+            <button class="btn" onclick="openProject('vila-parque')">Vila Parque Butantã</button>
+        </div>
+
+        <!-- TELA 2: SUBMENU DO EMPREENDIMENTO SELECIONADO -->
+        <div id="view-project" class="view hidden">
+            <button class="btn btn-back" onclick="goHome()">← Voltar aos Empreendimentos</button>
+            
+            <div class="header">
+                <h1 id="project-title">Nome do Empreendimento</h1>
+            </div>
+
+            <!-- BOTÕES INTERNOS CONFORME SUA IMAGEM -->
+            <a id="link-site" class="btn" href="#" target="_blank">SITE</a>
+            <a id="link-filme" class="btn" href="#" target="_blank">FILME DE PRODUTO</a>
+            <a id="link-book" class="btn" href="#" target="_blank">BOOK DIGITAL</a>
+            <a id="link-pecas" class="btn" href="#" target="_blank">PEÇAS ONLINE</a>
+            <a id="link-3d" class="btn" href="#" target="_blank">IMAGENS 3D</a>
+            <a id="link-plantas" class="btn" href="#" target="_blank">PLANTAS</a>
+            <a id="link-ficha" class="btn" href="#" target="_blank">FICHA TÉCNICA</a>
+            <a id="link-implantacao" class="btn" href="#" target="_blank">IMPLANTAÇÕES</a>
+        </div>
+
+    </div>
+
+    <script>
+        // BANCO DE DADOS DOS EMPREENDIMENTOS E LINKS
+        const projectsData = {
+            'marques': {
+                title: 'Marquês by Cambur',
+                site: 'https://cambur.com.br/empreendimentos/marques-by-cambur',
+                filme: 'https://youtube.com', // Cole o link do vídeo
+                book: 'assets/marques/book.pdf', // Exemplo de arquivo no GitHub
+                pecas: '#',
+                3d: '#',
+                plantas: '#',
+                ficha: '#',
+                implantacao: '#'
+            },
+            'arts-jockey': {
+                title: 'Arts Jockey Butantã',
+                site: 'https://cambur.com.br/empreendimentos/arts-jockey-butanta',
+                filme: '#',
+                book: '#',
+                pecas: '#',
+                3d: '#',
+                plantas: '#',
+                ficha: '#',
+                implantacao: '#'
+            },
+            'pilarys': {
+                title: 'Pilarys Jd. Guedala',
+                site: 'https://cambur.com.br/empreendimentos/pilarys-jd-guedala',
+                filme: '#',
+                book: '#',
+                pecas: '#',
+                3d: '#',
+                plantas: '#',
+                ficha: '#',
+                implantacao: '#'
+            },
+            'vista': {
+                title: 'Vista Jd. Guedala',
+                site: 'https://cambur.com.br/empreendimentos/vista-jd-guedala',
+                filme: '#',
+                book: '#',
+                pecas: '#',
+                3d: '#',
+                plantas: '#',
+                ficha: '#',
+                implantacao: '#'
+            },
+            'galleria': {
+                title: 'Galleria SP Centro',
+                site: 'https://cambur.com.br/empreendimentos/galleria-sp-centro',
+                filme: '#',
+                book: '#',
+                pecas: '#',
+                3d: '#',
+                plantas: '#',
+                ficha: '#',
+                implantacao: '#'
+            },
+            'yellow': {
+                title: 'Yellow SP Jd. Guedala',
+                site: 'https://cambur.com.br/empreendimentos/yellow-sp-jd-guedala',
+                filme: '#',
+                book: '#',
+                pecas: '#',
+                3d: '#',
+                plantas: '#',
+                ficha: '#',
+                implantacao: '#'
+            },
+            'vila-parque': {
+                title: 'Vila Parque Butantã',
+                site: 'https://cambur.com.br/empreendimentos/vila-parque-butanta',
+                filme: '#',
+                book: '#',
+                pecas: '#',
+                3d: '#',
+                plantas: '#',
+                ficha: '#',
+                implantacao: '#'
+            }
+        };
+
+        // NAVEGAÇÃO ENTRE TELAS
+        function openProject(key) {
+            const data = projectsData[key];
+            if (!data) return;
+
+            document.getElementById('project-title').innerText = data.title;
+            document.getElementById('link-site').href = data.site || '#';
+            document.getElementById('link-filme').href = data.filme || '#';
+            document.getElementById('link-book').href = data.book || '#';
+            document.getElementById('link-pecas').href = data.pecas || '#';
+            document.getElementById('link-3d').href = data['3d'] || '#';
+            document.getElementById('link-plantas').href = data.plantas || '#';
+            document.getElementById('link-ficha').href = data.ficha || '#';
+            document.getElementById('link-implantacao').href = data.implantacao || '#';
+
+            document.getElementById('view-home').classList.add('hidden');
+            document.getElementById('view-project').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function goHome() {
+            document.getElementById('view-project').classList.add('hidden');
+            document.getElementById('view-home').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
