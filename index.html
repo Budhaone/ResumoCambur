@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfólio Imobiliário - Cambur</title>
+    <title>Portfólio Imobiliário</title>
     <style>
         * {
             box-sizing: border-box;
@@ -52,12 +52,11 @@
             opacity: 0.9;
         }
 
-        /* Botões Estilo Linktree da Imagem */
         .btn {
             background-color: #1e2869;
             color: #ffffff;
             text-decoration: none;
-            padding: 18px 20px;
+            padding: 16px 20px;
             border-radius: 50px;
             font-size: 14px;
             font-weight: 600;
@@ -74,9 +73,25 @@
             width: 100%;
         }
 
+        .btn-wsp {
+            background-color: #25d366 !important;
+            color: #ffffff !important;
+            font-weight: 700;
+        }
+
+        .btn-file {
+            background-color: #ffffff !important;
+            color: #1e2869 !important;
+            font-weight: 600;
+            text-transform: none !important;
+            justify-content: flex-start !important;
+            padding-left: 20px !important;
+            text-align: left !important;
+        }
+
         .btn:active {
             transform: scale(0.98);
-            background-color: #151d4d;
+            opacity: 0.9;
         }
 
         .btn-back {
@@ -109,7 +124,7 @@
             </div>
 
             <div class="section-title">Lançamentos / Em Obras</div>
-            <button class="btn" onclick="openProject('marques')">Marquês by Cambur</button>
+            <button class="btn" onclick="openProject('marques')">Marquês</button>
             <button class="btn" onclick="openProject('arts-jockey')">Arts Jockey Butantã</button>
             <button class="btn" onclick="openProject('pilarys')">Pilarys Jd. Guedala</button>
             <button class="btn" onclick="openProject('vista')">Vista Jd. Guedala</button>
@@ -120,132 +135,254 @@
             <button class="btn" onclick="openProject('vila-parque')">Vila Parque Butantã</button>
         </div>
 
-        <!-- TELA 2: SUBMENU DO EMPREENDIMENTO SELECIONADO -->
+        <!-- TELA 2: SUBMENU DO EMPREENDIMENTO -->
         <div id="view-project" class="view hidden">
             <button class="btn btn-back" onclick="goHome()">← Voltar aos Empreendimentos</button>
             
             <div class="header">
-                <h1 id="project-title">Nome do Empreendimento</h1>
+                <h1 id="project-title">Empreendimento</h1>
             </div>
 
-            <!-- BOTÕES INTERNOS CONFORME SUA IMAGEM -->
-            <a id="link-site" class="btn" href="#" target="_blank">SITE</a>
-            <a id="link-filme" class="btn" href="#" target="_blank">FILME DE PRODUTO</a>
-            <a id="link-book" class="btn" href="#" target="_blank">BOOK DIGITAL</a>
-            <a id="link-pecas" class="btn" href="#" target="_blank">PEÇAS ONLINE</a>
-            <a id="link-3d" class="btn" href="#" target="_blank">IMAGENS 3D</a>
-            <a id="link-plantas" class="btn" href="#" target="_blank">PLANTAS</a>
-            <a id="link-ficha" class="btn" href="#" target="_blank">FICHA TÉCNICA</a>
-            <a id="link-implantacao" class="btn" href="#" target="_blank">IMPLANTAÇÕES</a>
+            <a id="link-wsp" class="btn btn-wsp" href="#" target="_blank">FALAR COM O CORRETOR</a>
+            <a id="link-filme" class="btn" href="#" target="_blank">FILME INSTITUCIONAL</a>
+            <button class="btn" onclick="handleCategory('book')">BOOK DIGITAL</button>
+            <button class="btn" onclick="handleCategory('imagens')">IMAGENS 3D</button>
+            <button class="btn" onclick="handleCategory('plantas')">PLANTAS E IMPLANTAÇÃO</button>
+            <button class="btn" onclick="handleCategory('tabela')">TABELA DE VENDAS</button>
+            <button class="btn" onclick="handleCategory('ficha')">FICHA E DOCUMENTOS</button>
+        </div>
+
+        <!-- TELA 3: SUB-LISTA DE ARQUIVOS DA CATEGORIA -->
+        <div id="view-sublist" class="view hidden">
+            <button class="btn btn-back" onclick="goProject()">← Voltar ao Empreendimento</button>
+            
+            <div class="header">
+                <h1 id="sublist-title">Arquivos</h1>
+            </div>
+
+            <div id="files-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
         </div>
 
     </div>
 
     <script>
-        // BANCO DE DADOS DOS EMPREENDIMENTOS E LINKS
+        // INSIRA AQUI O SEU NÚMERO DE WHATSAPP (DDD + NÚMERO, ex: 5511999999999)
+        const meuWhatsapp = "5511999999999";
+
+        let currentProjectKey = null;
+
         const projectsData = {
-            'marques': {
-                title: 'Marquês by Cambur',
-                site: 'https://cambur.com.br/empreendimentos/marques-by-cambur',
-                filme: 'https://youtube.com', // Cole o link do vídeo
-                book: 'assets/marques/book.pdf', // Exemplo de arquivo no GitHub
-                pecas: '#',
-                3d: '#',
-                plantas: '#',
-                ficha: '#',
-                implantacao: '#'
-            },
             'arts-jockey': {
                 title: 'Arts Jockey Butantã',
-                site: 'https://cambur.com.br/empreendimentos/arts-jockey-butanta',
-                filme: '#',
-                book: '#',
-                pecas: '#',
-                3d: '#',
-                plantas: '#',
-                ficha: '#',
-                implantacao: '#'
-            },
-            'pilarys': {
-                title: 'Pilarys Jd. Guedala',
-                site: 'https://cambur.com.br/empreendimentos/pilarys-jd-guedala',
-                filme: '#',
-                book: '#',
-                pecas: '#',
-                3d: '#',
-                plantas: '#',
-                ficha: '#',
-                implantacao: '#'
-            },
-            'vista': {
-                title: 'Vista Jd. Guedala',
-                site: 'https://cambur.com.br/empreendimentos/vista-jd-guedala',
-                filme: '#',
-                book: '#',
-                pecas: '#',
-                3d: '#',
-                plantas: '#',
-                ficha: '#',
-                implantacao: '#'
+                filme: '#', // COLE O LINK DO YOUTUBE AQUI QUANDO TIVER
+                book: [
+                    { name: 'Book Arts Estudios', url: 'assets/arts-jockey/book/book-arts-estudios.pdf' },
+                    { name: 'Book Arts Residence', url: 'assets/arts-jockey/book/book-arts-residence.pdf' }
+                ],
+                ficha: [
+                    { name: 'Ficha Cadastral T3', url: 'assets/arts-jockey/ficha-docs/ficha-cadastral-t3.pdf' }
+                ],
+                tabela: [
+                    { name: 'Tabela de Preço Arts C12', url: 'assets/arts-jockey/tabela/tabela-de-preco-lancamento-arts-c12.pdf' }
+                ],
+                imagens: Array.from({length: 20}, (_, i) => ({ name: `Imagem 3D ${i+1}`, url: `assets/arts-jockey/imagens/midia-${i+2}.jpg` })),
+                plantas: [
+                    { name: 'Planta / Implantação 1', url: 'assets/arts-jockey/plantas-implantacao/midia-22.jpg' },
+                    { name: 'Planta / Implantação 2', url: 'assets/arts-jockey/plantas-implantacao/midia-23.jpg' }
+                ]
             },
             'galleria': {
                 title: 'Galleria SP Centro',
-                site: 'https://cambur.com.br/empreendimentos/galleria-sp-centro',
-                filme: '#',
-                book: '#',
-                pecas: '#',
-                3d: '#',
-                plantas: '#',
-                ficha: '#',
-                implantacao: '#'
+                filme: 'https://youtu.be/BxEnP5u_KGM?is=s6wm7HbK_mW6bC1W', // LINK CONFIGURADO
+                book: [
+                    { name: 'Book Galleria SP', url: 'assets/galleria/book/book-galleria-sp.pdf' }
+                ],
+                ficha: [
+                    { name: 'Ficha Cadastral T3', url: 'assets/galleria/ficha-docs/ficha-cadastral-t3.pdf' }
+                ],
+                tabela: [
+                    { name: 'Tabela Galleria SP', url: 'assets/galleria/tabela/tabela-galleria-sp.pdf' }
+                ],
+                imagens: Array.from({length: 12}, (_, i) => ({ name: `Imagem 3D ${i+1}`, url: `assets/galleria/imagens/midia-${i+2}.jpg` })),
+                plantas: Array.from({length: 27}, (_, i) => ({ name: `Planta / Implantação ${i+1}`, url: `assets/galleria/plantas-implantacao/midia-${i+13}.jpg` }))
             },
-            'yellow': {
-                title: 'Yellow SP Jd. Guedala',
-                site: 'https://cambur.com.br/empreendimentos/yellow-sp-jd-guedala',
-                filme: '#',
-                book: '#',
-                pecas: '#',
-                3d: '#',
-                plantas: '#',
-                ficha: '#',
-                implantacao: '#'
+            'marques': {
+                title: 'Marquês',
+                filme: '#', // COLE O LINK DO YOUTUBE AQUI QUANDO TIVER
+                book: [
+                    { name: 'Book Marquês (Preliminar)', url: 'assets/marques/book/book-marques-preliminar.pdf' }
+                ],
+                ficha: [
+                    { name: 'Ficha Cadastral T3', url: 'assets/marques/ficha-docs/ficha-cadastral-t3.pdf' }
+                ],
+                tabela: [
+                    { name: 'Tabela Pré-Lançamento Marquês', url: 'assets/marques/tabela/tabela-pre-lancamento-marques-set-2026-r00-1.pdf' }
+                ],
+                imagens: Array.from({length: 8}, (_, i) => ({ name: `Imagem 3D ${i+1}`, url: `assets/marques/imagens/midia-${i+2}.jpg` })),
+                plantas: Array.from({length: 7}, (_, i) => ({ name: `Planta / Implantação ${i+1}`, url: `assets/marques/plantas-implantacao/midia-${i+10}.jpg` }))
+            },
+            'pilarys': {
+                title: 'Pilarys Jd. Guedala',
+                filme: '#', // COLE O LINK DO YOUTUBE AQUI QUANDO TIVER
+                book: [
+                    { name: 'Book Pilarys', url: 'assets/pilarys/book/book-pilarys.pdf' }
+                ],
+                ficha: [
+                    { name: 'Ficha Cadastral T3', url: 'assets/pilarys/ficha-docs/ficha-cadastral-t3.pdf' }
+                ],
+                tabela: [
+                    { name: 'Tabela Pilarys', url: 'assets/pilarys/tabela/tabela-pillares.pdf' }
+                ],
+                imagens: Array.from({length: 6}, (_, i) => ({ name: `Imagem 3D ${i+1}`, url: `assets/pilarys/imagens/midia-${i+2}.jpg` })),
+                plantas: [
+                    { name: 'Planta / Implantação 1', url: 'assets/pilarys/plantas-implantacao/midia-7.jpg' },
+                    { name: 'Planta / Implantação 2', url: 'assets/pilarys/plantas-implantacao/midia-8.jpg' },
+                    { name: 'Planta / Implantação 3', url: 'assets/pilarys/plantas-implantacao/midia-9.jpg' }
+                ]
             },
             'vila-parque': {
                 title: 'Vila Parque Butantã',
-                site: 'https://cambur.com.br/empreendimentos/vila-parque-butanta',
-                filme: '#',
-                book: '#',
-                pecas: '#',
-                3d: '#',
-                plantas: '#',
-                ficha: '#',
-                implantacao: '#'
+                filme: '#', // COLE O LINK DO YOUTUBE AQUI QUANDO TIVER
+                book: [
+                    { name: 'Book Vila Parque', url: 'assets/vila-parque/book/book-vila-parque.pdf' }
+                ],
+                ficha: [
+                    { name: 'Convenção de Condomínio', url: 'assets/vila-parque/ficha-docs/convencao-condominio-vital.pdf' },
+                    { name: 'Memória de Incorporação', url: 'assets/vila-parque/ficha-docs/memoria-de-incorporacao-condominio-vital.pdf' },
+                    { name: 'Ficha Cadastral T3', url: 'assets/vila-parque/ficha-docs/ficha-cadastral-t3.pdf' }
+                ],
+                tabela: [
+                    { name: 'Tabela Villa Parque', url: 'assets/vila-parque/tabela/tabela-villa-parque.pdf' }
+                ],
+                imagens: [
+                    { name: 'Fachada Aérea', url: 'assets/vila-parque/imagens/fachada-aerea-vila-parque.jpg' },
+                    { name: '32m² Quarto', url: 'assets/vila-parque/imagens/32m2-quarto.jpg' },
+                    { name: '52m² Living', url: 'assets/vila-parque/imagens/52m2-living.jpg' },
+                    { name: '52m² Suíte', url: 'assets/vila-parque/imagens/52m2-suite.jpg' },
+                    { name: '79m² Living', url: 'assets/vila-parque/imagens/79m2-living.jpg' },
+                    { name: '79m² Suíte', url: 'assets/vila-parque/imagens/79m2-suite.jpg' },
+                    { name: '79m² Terraço', url: 'assets/vila-parque/imagens/79m2-terraco.jpg' }
+                ],
+                plantas: [
+                    { name: 'Implantação Torre Morato Studios', url: 'assets/vila-parque/plantas-implantacao/implantacao-torre-morato-studios.jpg' },
+                    { name: 'Prumada Torre Morato', url: 'assets/vila-parque/plantas-implantacao/prumada-torre-morato.jpg' },
+                    { name: 'Planta 25m² Studio', url: 'assets/vila-parque/plantas-implantacao/25m2-studio.jpg' },
+                    { name: 'Planta 32m² 1 Dorm', url: 'assets/vila-parque/plantas-implantacao/32m2-1-dorm.jpg' },
+                    { name: 'Planta 41m²', url: 'assets/vila-parque/plantas-implantacao/41m2-final-1.jpg' },
+                    { name: 'Planta 79m²', url: 'assets/vila-parque/plantas-implantacao/79m2-final-1-3.jpg' }
+                ]
+            },
+            'vista': {
+                title: 'Vista Jd. Guedala',
+                filme: '#', // COLE O LINK DO YOUTUBE AQUI QUANDO TIVER
+                book: [
+                    { name: 'Book Vista Jardim Guedala', url: 'assets/vista/book/book-vista-jardim-guedala.pdf' }
+                ],
+                ficha: [
+                    { name: 'Ficha Cadastral T3', url: 'assets/vista/ficha-docs/ficha-cadastral-t3.pdf' }
+                ],
+                tabela: [
+                    { name: 'Tabela Vista', url: 'assets/vista/tabela/tabela-vista.pdf' }
+                ],
+                imagens: Array.from({length: 16}, (_, i) => ({ name: `Imagem 3D ${i+1}`, url: `assets/vista/imagens/midia-${i+2}.jpg` })),
+                plantas: [
+                    { name: 'Planta / Implantação 1', url: 'assets/vista/plantas-implantacao/midia-18.jpg' },
+                    { name: 'Planta / Implantação 2', url: 'assets/vista/plantas-implantacao/midia-19.jpg' },
+                    { name: 'Planta / Implantação 3', url: 'assets/vista/plantas-implantacao/midia-20.jpg' }
+                ]
+            },
+            'yellow': {
+                title: 'Yellow SP Jd. Guedala',
+                filme: '#', // COLE O LINK DO YOUTUBE AQUI QUANDO TIVER
+                book: [],
+                ficha: [
+                    { name: 'Ficha Cadastral T3', url: 'assets/yellow/ficha-docs/ficha-cadastral-t3.pdf' }
+                ],
+                tabela: [],
+                imagens: [
+                    { name: 'Espaço Gourmet', url: 'assets/yellow/imagens/espaco-gourmet.jpg' },
+                    { name: 'Fachada', url: 'assets/yellow/imagens/fachada.jpg' },
+                    { name: 'Quadra', url: 'assets/yellow/imagens/quadra.jpg' }
+                ],
+                plantas: Array.from({length: 23}, (_, i) => ({ name: `Planta / Implantação ${i+1}`, url: `assets/yellow/plantas-implantacao/midia-${i+11}.jpg` }))
             }
         };
 
-        // NAVEGAÇÃO ENTRE TELAS
         function openProject(key) {
+            currentProjectKey = key;
             const data = projectsData[key];
             if (!data) return;
 
             document.getElementById('project-title').innerText = data.title;
-            document.getElementById('link-site').href = data.site || '#';
-            document.getElementById('link-filme').href = data.filme || '#';
-            document.getElementById('link-book').href = data.book || '#';
-            document.getElementById('link-pecas').href = data.pecas || '#';
-            document.getElementById('link-3d').href = data['3d'] || '#';
-            document.getElementById('link-plantas').href = data.plantas || '#';
-            document.getElementById('link-ficha').href = data.ficha || '#';
-            document.getElementById('link-implantacao').href = data.implantacao || '#';
+            document.getElementById('link-wsp').href = `https://wa.me/${meuWhatsapp}?text=Olá,%20tenho%20interesse%20no%20empreendimento%20${encodeURIComponent(data.title)}`;
+            
+            const btnFilme = document.getElementById('link-filme');
+            if (data.filme && data.filme !== '#') {
+                btnFilme.href = data.filme;
+                btnFilme.style.display = 'flex';
+            } else {
+                btnFilme.style.display = 'none';
+            }
 
             document.getElementById('view-home').classList.add('hidden');
             document.getElementById('view-project').classList.remove('hidden');
             window.scrollTo(0, 0);
         }
 
+        function handleCategory(category) {
+            const data = projectsData[currentProjectKey];
+            if (!data || !data[category]) return;
+
+            const files = data[category];
+
+            if (files.length === 0) {
+                alert('Material em breve para este empreendimento!');
+                return;
+            }
+
+            // Se for arquivo único, abre direto em nova aba
+            if (files.length === 1) {
+                window.open(files[0].url, '_blank');
+                return;
+            }
+
+            // Se houver múltiplos arquivos, abre a tela de sub-lista
+            const sublistContainer = document.getElementById('files-list');
+            sublistContainer.innerHTML = '';
+
+            const titulos = {
+                'book': 'Books Digitais',
+                'imagens': 'Galeria de Imagens 3D',
+                'plantas': 'Plantas & Implantação',
+                'tabela': 'Tabela de Vendas',
+                'ficha': 'Ficha & Documentos'
+            };
+
+            document.getElementById('sublist-title').innerText = titulos[category] || 'Arquivos';
+
+            files.forEach(file => {
+                const a = document.createElement('a');
+                a.className = 'btn btn-file';
+                a.href = file.url;
+                a.target = '_blank';
+                a.innerText = `📄 ${file.name}`;
+                sublistContainer.appendChild(a);
+            });
+
+            document.getElementById('view-project').classList.add('hidden');
+            document.getElementById('view-sublist').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
         function goHome() {
             document.getElementById('view-project').classList.add('hidden');
             document.getElementById('view-home').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function goProject() {
+            document.getElementById('view-sublist').classList.add('hidden');
+            document.getElementById('view-project').classList.remove('hidden');
             window.scrollTo(0, 0);
         }
     </script>
