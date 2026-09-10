@@ -166,12 +166,44 @@
     </div>
 
     <script>
-        // INSIRA AQUI O SEU NÚMERO DE WHATSAPP (DDD + NÚMERO, ex: 5511999999999)
+        // INSIRA AQUI O SEU NÚMERO DE WHATSAPP (DDD + NÚMERO)
         const meuWhatsapp = "5511999999999";
 
         let currentProjectKey = null;
 
         const projectsData = {
+            'marques': {
+                title: 'Marquês',
+                filme: '#', // COLE O LINK DO YOUTUBE AQUI QUANDO TIVER
+                book: [
+                    { name: 'Book Marquês (Preliminar)', url: 'assets/marques/book/book-marques-preliminar.pdf' }
+                ],
+                ficha: [
+                    { name: 'Ficha Cadastral T3', url: 'assets/marques/ficha-docs/ficha-cadastral-t3.pdf' }
+                ],
+                tabela: [
+                    { name: 'Tabela Pré-Lançamento Marquês', url: 'assets/marques/tabela/tabela-pre-lancamento-marques-set-2026-r00-1.pdf' }
+                ],
+                imagens: [
+                    { name: 'Imagem 3D 1', url: 'assets/marques/imagens/midia_2.webp' },
+                    { name: 'Imagem 3D 2', url: 'assets/marques/imagens/midia_3.webp' },
+                    { name: 'Imagem 3D 3', url: 'assets/marques/imagens/midia_4.webp' },
+                    { name: 'Imagem 3D 4', url: 'assets/marques/imagens/midia_5.webp' },
+                    { name: 'Imagem 3D 5', url: 'assets/marques/imagens/midia_6.webp' },
+                    { name: 'Imagem 3D 6', url: 'assets/marques/imagens/midia_7.webp' },
+                    { name: 'Imagem 3D 7', url: 'assets/marques/imagens/midia_8.webp' },
+                    { name: 'Imagem 3D 8', url: 'assets/marques/imagens/midia_9.webp' }
+                ],
+                plantas: [
+                    { name: 'Planta / Implantação 1', url: 'assets/marques/plantas-implantacao/midia_10.webp' },
+                    { name: 'Planta / Implantação 2', url: 'assets/marques/plantas-implantacao/midia_11.webp' },
+                    { name: 'Planta / Implantação 3', url: 'assets/marques/plantas-implantacao/midia_12.webp' },
+                    { name: 'Planta / Implantação 4', url: 'assets/marques/plantas-implantacao/midia_13.webp' },
+                    { name: 'Planta / Implantação 5', url: 'assets/marques/plantas-implantacao/midia_14.webp' },
+                    { name: 'Planta / Implantação 6', url: 'assets/marques/plantas-implantacao/midia_15.webp' },
+                    { name: 'Planta / Implantação 7', url: 'assets/marques/plantas-implantacao/midia_16.webp' }
+                ]
+            },
             'arts-jockey': {
                 title: 'Arts Jockey Butantã',
                 filme: '#', // COLE O LINK DO YOUTUBE AQUI QUANDO TIVER
@@ -185,15 +217,15 @@
                 tabela: [
                     { name: 'Tabela de Preço Arts C12', url: 'assets/arts-jockey/tabela/tabela-de-preco-lancamento-arts-c12.pdf' }
                 ],
-                imagens: Array.from({length: 20}, (_, i) => ({ name: `Imagem 3D ${i+1}`, url: `assets/arts-jockey/imagens/midia-${i+2}.jpg` })),
+                imagens: Array.from({length: 20}, (_, i) => ({ name: `Imagem 3D ${i+1}`, url: `assets/arts-jockey/imagens/midia_${i+2}.webp` })),
                 plantas: [
-                    { name: 'Planta / Implantação 1', url: 'assets/arts-jockey/plantas-implantacao/midia-22.jpg' },
-                    { name: 'Planta / Implantação 2', url: 'assets/arts-jockey/plantas-implantacao/midia-23.jpg' }
+                    { name: 'Planta / Implantação 1', url: 'assets/arts-jockey/plantas-implantacao/midia_22.webp' },
+                    { name: 'Planta / Implantação 2', url: 'assets/arts-jockey/plantas-implantacao/midia_23.webp' }
                 ]
             },
             'galleria': {
                 title: 'Galleria SP Centro',
-                filme: 'https://youtu.be/BxEnP5u_KGM?is=s6wm7HbK_mW6bC1W', // LINK CONFIGURADO
+                filme: 'https://youtu.be/BxEnP5u_KGM?is=s6wm7HbK_mW6bC1W',
                 book: [
                     { name: 'Book Galleria SP', url: 'assets/galleria/book/book-galleria-sp.pdf' }
                 ],
@@ -203,23 +235,20 @@
                 tabela: [
                     { name: 'Tabela Galleria SP', url: 'assets/galleria/tabela/tabela-galleria-sp.pdf' }
                 ],
-                imagens: Array.from({length: 12}, (_, i) => ({ name: `Imagem 3D ${i+1}`, url: `assets/galleria/imagens/midia-${i+2}.jpg` })),
-                plantas: Array.from({length: 27}, (_, i) => ({ name: `Planta / Implantação ${i+1}`, url: `assets/galleria/plantas-implantacao/midia-${i+13}.jpg` }))
-            },
-            'marques': {
-                title: 'Marquês',
-                filme: '#', // COLE O LINK DO YOUTUBE AQUI QUANDO TIVER
-                book: [
-                    { name: 'Book Marquês (Preliminar)', url: 'assets/marques/book/book-marques-preliminar.pdf' }
+                imagens: [
+                    { name: 'Imagem 3D 1', url: 'assets/galleria/imagens/midia_2.jpg' },
+                    { name: 'Imagem 3D 2', url: 'assets/galleria/imagens/midia_3.webp' },
+                    { name: 'Imagem 3D 3', url: 'assets/galleria/imagens/midia_4.webp' },
+                    { name: 'Imagem 3D 4', url: 'assets/galleria/imagens/midia_5.webp' },
+                    { name: 'Imagem 3D 5', url: 'assets/galleria/imagens/midia_6.webp' },
+                    { name: 'Imagem 3D 6', url: 'assets/galleria/imagens/midia_7.webp' },
+                    { name: 'Imagem 3D 7', url: 'assets/galleria/imagens/midia_8.webp' },
+                    { name: 'Imagem 3D 8', url: 'assets/galleria/imagens/midia_9.webp' },
+                    { name: 'Imagem 3D 9', url: 'assets/galleria/imagens/midia_10.webp' },
+                    { name: 'Imagem 3D 10', url: 'assets/galleria/imagens/midia_11.webp' },
+                    { name: 'Imagem 3D 11', url: 'assets/galleria/imagens/midia_12.webp' }
                 ],
-                ficha: [
-                    { name: 'Ficha Cadastral T3', url: 'assets/marques/ficha-docs/ficha-cadastral-t3.pdf' }
-                ],
-                tabela: [
-                    { name: 'Tabela Pré-Lançamento Marquês', url: 'assets/marques/tabela/tabela-pre-lancamento-marques-set-2026-r00-1.pdf' }
-                ],
-                imagens: Array.from({length: 8}, (_, i) => ({ name: `Imagem 3D ${i+1}`, url: `assets/marques/imagens/midia-${i+2}.jpg` })),
-                plantas: Array.from({length: 7}, (_, i) => ({ name: `Planta / Implantação ${i+1}`, url: `assets/marques/plantas-implantacao/midia-${i+10}.jpg` }))
+                plantas: Array.from({length: 27}, (_, i) => ({ name: `Planta / Implantação ${i+1}`, url: `assets/galleria/plantas-implantacao/midia_${i+13}.jpg` }))
             },
             'pilarys': {
                 title: 'Pilarys Jd. Guedala',
@@ -233,11 +262,18 @@
                 tabela: [
                     { name: 'Tabela Pilarys', url: 'assets/pilarys/tabela/tabela-pillares.pdf' }
                 ],
-                imagens: Array.from({length: 6}, (_, i) => ({ name: `Imagem 3D ${i+1}`, url: `assets/pilarys/imagens/midia-${i+2}.jpg` })),
+                imagens: [
+                    { name: 'Imagem 3D 1', url: 'assets/pilarys/imagens/midia_2.webp' },
+                    { name: 'Imagem 3D 2', url: 'assets/pilarys/imagens/midia_3.webp' },
+                    { name: 'Imagem 3D 3', url: 'assets/pilarys/imagens/midia_4.webp' },
+                    { name: 'Imagem 3D 4', url: 'assets/pilarys/imagens/midia_5.webp' },
+                    { name: 'Imagem 3D 5', url: 'assets/pilarys/imagens/midia_6.webp' },
+                    { name: 'Imagem 3D 6', url: 'assets/pilarys/imagens/midia_10.webp' }
+                ],
                 plantas: [
-                    { name: 'Planta / Implantação 1', url: 'assets/pilarys/plantas-implantacao/midia-7.jpg' },
-                    { name: 'Planta / Implantação 2', url: 'assets/pilarys/plantas-implantacao/midia-8.jpg' },
-                    { name: 'Planta / Implantação 3', url: 'assets/pilarys/plantas-implantacao/midia-9.jpg' }
+                    { name: 'Planta / Implantação 1', url: 'assets/pilarys/plantas-implantacao/midia_7.webp' },
+                    { name: 'Planta / Implantação 2', url: 'assets/pilarys/plantas-implantacao/midia_8.webp' },
+                    { name: 'Planta / Implantação 3', url: 'assets/pilarys/plantas-implantacao/midia_9.webp' }
                 ]
             },
             'vila-parque': {
@@ -284,11 +320,11 @@
                 tabela: [
                     { name: 'Tabela Vista', url: 'assets/vista/tabela/tabela-vista.pdf' }
                 ],
-                imagens: Array.from({length: 16}, (_, i) => ({ name: `Imagem 3D ${i+1}`, url: `assets/vista/imagens/midia-${i+2}.jpg` })),
+                imagens: Array.from({length: 16}, (_, i) => ({ name: `Imagem 3D ${i+1}`, url: `assets/vista/imagens/midia_${i+2}.webp` })),
                 plantas: [
-                    { name: 'Planta / Implantação 1', url: 'assets/vista/plantas-implantacao/midia-18.jpg' },
-                    { name: 'Planta / Implantação 2', url: 'assets/vista/plantas-implantacao/midia-19.jpg' },
-                    { name: 'Planta / Implantação 3', url: 'assets/vista/plantas-implantacao/midia-20.jpg' }
+                    { name: 'Planta / Implantação 1', url: 'assets/vista/plantas-implantacao/midia_18.webp' },
+                    { name: 'Planta / Implantação 2', url: 'assets/vista/plantas-implantacao/midia_19.webp' },
+                    { name: 'Planta / Implantação 3', url: 'assets/vista/plantas-implantacao/midia_20.webp' }
                 ]
             },
             'yellow': {
@@ -304,7 +340,7 @@
                     { name: 'Fachada', url: 'assets/yellow/imagens/fachada.jpg' },
                     { name: 'Quadra', url: 'assets/yellow/imagens/quadra.jpg' }
                 ],
-                plantas: Array.from({length: 23}, (_, i) => ({ name: `Planta / Implantação ${i+1}`, url: `assets/yellow/plantas-implantacao/midia-${i+11}.jpg` }))
+                plantas: Array.from({length: 23}, (_, i) => ({ name: `Planta / Implantação ${i+1}`, url: `assets/yellow/plantas-implantacao/midia_${i+11}.jpg` }))
             }
         };
 
@@ -340,13 +376,11 @@
                 return;
             }
 
-            // Se for arquivo único, abre direto em nova aba
             if (files.length === 1) {
                 window.open(files[0].url, '_blank');
                 return;
             }
 
-            // Se houver múltiplos arquivos, abre a tela de sub-lista
             const sublistContainer = document.getElementById('files-list');
             sublistContainer.innerHTML = '';
 
