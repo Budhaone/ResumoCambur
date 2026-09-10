@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfólio Imobiliário</title>
+
+    <!-- IMPORTAÇÃO DA FONTE MONTSERRAT (GOOGLE FONTS) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         body {
@@ -37,20 +43,20 @@
         }
 
         .header h1 {
-            font-size: 20px;
-            font-weight: 700;
-            letter-spacing: 1px;
+            font-size: 19px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
             text-transform: uppercase;
         }
 
         .section-title {
             color: #ffffff;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             margin: 15px 0 5px 10px;
-            opacity: 0.9;
+            opacity: 0.95;
         }
 
         .btn {
@@ -59,32 +65,32 @@
             text-decoration: none;
             padding: 16px 20px;
             border-radius: 50px;
-            font-size: 14px;
-            font-weight: 600;
+            font-size: 13px;
+            font-weight: 700;
             text-align: center;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
             display: flex;
             justify-content: center;
             align-items: center;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
             transition: transform 0.1s ease, background-color 0.2s ease;
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             width: 100%;
         }
 
         .btn-wsp {
             background-color: #25d366 !important;
             color: #ffffff !important;
-            font-weight: 700;
+            font-weight: 800;
             border: none !important;
         }
 
         .btn-file {
             background-color: #ffffff !important;
             color: #0f172a !important;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: none !important;
             justify-content: flex-start !important;
             padding-left: 20px !important;
@@ -210,7 +216,7 @@
     </div>
 
     <script>
-        // ⚠️ ALTERE AQUI O NÚMERO DO NOVO GERENTE (DDD + NÚMERO)
+        // ⚠️ INSIRA AQUI O NÚMERO DE WHATSAPP DO NOVO GERENTE (DDD + NÚMERO)
         const meuWhatsapp = "5511988887777"; 
 
         let currentProjectKey = null;
