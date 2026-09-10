@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio Imobiliário</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            /* PALETA AZUL PREMIUM */
+            background: linear-gradient(180deg, #1e3a8a 0%, #0f172a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px 15px 40px 15px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .header {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin: 15px 0 5px 10px;
+            opacity: 0.9;
+        }
+
+        .btn {
+            background-color: #0f172a;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 16px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            transition: transform 0.1s ease, background-color 0.2s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+
+        .btn-wsp {
+            background-color: #25d366 !important;
+            color: #ffffff !important;
+            font-weight: 700;
+            border: none !important;
+        }
+
+        .btn-file {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+            font-weight: 600;
+            text-transform: none !important;
+            justify-content: flex-start !important;
+            padding-left: 20px !important;
+            text-align: left !important;
+            border: none !important;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+            opacity: 0.9;
+        }
+
+        .btn-back {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            margin-bottom: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .view {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* --- VISUALIZADOR EM TELA CHEIA (MODAL) --- */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.92);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .modal img {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 8px;
+            object-fit: contain;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.6);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            color: #ffffff;
+            font-size: 38px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10000;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- TELA 1: LISTA DE EMPREENDIMENTOS -->
+        <div id="view-home" class="view">
+            <div class="header">
+                <h1>Lançamentos & Portfólio</h1>
+            </div>
+
+            <div class="section-title">Lançamentos / Em Obras</div>
+            <button class="btn" onclick="openProject('marques')">Marquês</button>
+            <button class="btn" onclick="openProject('arts-jockey')">Arts Jockey Butantã</button>
+            <button class="btn" onclick="openProject('pilarys')">Pilarys Jd. Guedala</button>
+            <button class="btn" onclick="openProject('vista')">Vista Jd. Guedala</button>
+            <button class="btn" onclick="openProject('galleria')">Galleria SP Centro</button>
+
+            <div class="section-title">Entregues</div>
+            <button class="btn" onclick="openProject('yellow')">Yellow SP Jd. Guedala</button>
+            <button class="btn" onclick="openProject('vila-parque')">Vila Parque Butantã</button>
+        </div>
+
+        <!-- TELA 2: SUBMENU DO EMPREENDIMENTO -->
+        <div id="view-project" class="view hidden">
+            <button class="btn btn-back" onclick="goHome()">← Voltar aos Empreendimentos</button>
+            
+            <div class="header">
+                <h1 id="project-title">Empreendimento</h1>
+            </div>
+
+            <a id="link-wsp" class="btn btn-wsp" href="#" target="_blank">FALAR COM O CORRETOR</a>
+            <a id="link-filme" class="btn" href="#" target="_blank">FILME INSTITUCIONAL</a>
+            <button class="btn" onclick="handleCategory('book')">BOOK DIGITAL</button>
+            <button class="btn" onclick="handleCategory('imagens')">IMAGENS 3D</button>
+            <button class="btn" onclick="handleCategory('plantas')">PLANTAS E IMPLANTAÇÃO</button>
+            <button class="btn" onclick="handleCategory('tabela')">TABELA DE VENDAS</button>
+            <button class="btn" onclick="handleCategory('ficha')">FICHA E DOCUMENTOS</button>
+        </div>
+
+        <!-- TELA 3: SUB-LISTA DE ARQUIVOS DA CATEGORIA -->
+        <div id="view-sublist" class="view hidden">
+            <button class="btn btn-back" onclick="goProject()">← Voltar ao Empreendimento</button>
+            
+            <div class="header">
+                <h1 id="sublist-title">Arquivos</h1>
+            </div>
+
+            <div id="files-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
+        </div>
+
+    </div>
+
+    <!-- MODAL DE VISUALIZAÇÃO EM TELA CHEIA -->
+    <div id="image-modal" class="modal hidden" onclick="closeModal()">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img id="modal-img" src="" alt="Visualização" onclick="event.stopPropagation()">
+    </div>
+
+    <script>
+        // ⚠️ ALTERE AQUI O NÚMERO DO NOVO GERENTE (DDD + NÚMERO)
+        const meuWhatsapp = "5511988887777"; 
+
+        let currentProjectKey = null;
+
+        const projectsData = {
+            'marques': {
+                title: 'Marquês',
+                filme: '#',
+                book: [
+                    { name: 'Book Marquês (Preliminar)', url: 'assets/marques/book/book-marques-preliminar.pdf' }
+                ],
+                ficha: [
+                    { name: 'Ficha Cadastral T3', url: 'assets/marques/ficha-docs/ficha-cadastral-t3.pdf' }
+                ],
+                tabela: [
+                    { name: 'Tabela Pré-Lançamento Marquês', url: 'assets/marques/tabela/tabela-pre-lancamento-marques-set-2026-r00-1.pdf' }
+                ],
+                imagens: [
+                    { name: 'Imagem 3D 1', url: 'assets/marques/imagens/midia_2.webp' },
+                    { name: 'Imagem 3D 2', url: 'assets/marques/imagens/midia_3.webp' },
+                    { name: 'Imagem 3D 3', url: 'assets/marques/imagens/midia_4.webp' },
+                    { name: 'Imagem 3D 4', url: 'assets/marques/imagens/midia_5.webp' },
+                    { name: 'Imagem 3D 5', url: 'assets/marques/imagens/midia_6.webp' },
+                    { name: 'Imagem 3D 6', url: 'assets/marques/imagens/midia_7.webp' },
+                    { name: 'Imagem 3D 7', url: 'assets/marques/imagens/midia_8.webp' },
+                    { name: 'Imagem 3D 8', url: 'assets/marques/imagens/midia_9.webp' }
+                ],
+                plantas: [
+                    { name: 'Planta / Implantação 1', url: 'assets/marques/plantas-implantacao/midia_10.webp' },
+                    { name: 'Planta / Implantação 2', url: 'assets/marques/plantas-implantacao/midia_11.webp' },
+                    { name: 'Planta / Implantação 3', url: 'assets/marques/plantas-implantacao/midia_12.webp' },
+                    { name: 'Planta / Implantação 4', url: 'assets/marques/plantas-implantacao/midia_13.webp' },
+                    { name: 'Planta / Implantação 5', url: 'assets/marques/plantas-implantacao/midia_14.webp' },
+                    { name: 'Planta / Implantação 6', url: 'assets/marques/plantas-implantacao/midia_15.webp' },
+                    { name: 'Planta / Implantação 7', url: 'assets/marques/plantas-implantacao/midia_16.webp' }
+                ]
+            },
+            'arts-jockey': {
+                title: 'Arts Jockey Butantã',
+                filme: '#',
+                book: [
+                    { name: 'Book Arts Estudios', url: 'assets/arts-jockey/book/book-arts-estudios.pdf' },
+                    { name: 'Book Arts Residence', url: 'assets/arts-jockey/book/book-arts-residence.pdf' }
+                ],
+                ficha: [
+                    { name: 'Ficha Cadastral T3', url: 'assets/arts-jockey/ficha-docs/ficha-cadastral-t3.pdf' }
+                ],
+                tabela: [
+                    { name: 'Tabela de Preço Arts C12', url: 'assets/arts-jockey/tabela/tabela-de-preco-lancamento-arts-c12.pdf' }
+                ],
+                imagens: Array.from({length: 20}, (_, i) => ({ name: `Imagem 3D ${i+1}`, url: `assets/arts-jockey/imagens/midia_${i+2}.webp` })),
+                plantas: [
+                    { name: 'Planta / Implantação 1', url: 'assets/arts-jockey/plantas-implantacao/midia_22.webp' },
+                    { name: 'Planta / Implantação 2', url: 'assets/arts-jockey/plantas-implantacao/midia_23.webp' }
+                ]
+            },
+            'galleria': {
+                title: 'Galleria SP Centro',
+                filme: 'https://youtu.be/BxEnP5u_KGM?is=s6wm7HbK_mW6bC1W',
+                book: [
+                    { name: 'Book Galleria SP', url: 'assets/galleria/book/book-galleria-sp.pdf' }
+                ],
+                ficha: [
+                    { name: 'Ficha Cadastral T3', url: 'assets/galleria/ficha-docs/ficha-cadastral-t3.pdf' }
+                ],
+                tabela: [
+                    { name: 'Tabela Galleria SP', url: 'assets/galleria/tabela/tabela-galleria-sp.pdf' }
+                ],
+                imagens: [
+                    { name: 'Imagem 3D 1', url: 'assets/galleria/imagens/midia_2.jpg' },
+                    { name: 'Imagem 3D 2', url: 'assets/galleria/imagens/midia_3.webp' },
+                    { name: 'Imagem 3D 3', url: 'assets/galleria/imagens/midia_4.webp' },
+                    { name: 'Imagem 3D 4', url: 'assets/galleria/imagens/midia_5.webp' },
+                    { name: 'Imagem 3D 5', url: 'assets/galleria/imagens/midia_6.webp' },
+                    { name: 'Imagem 3D 6', url: 'assets/galleria/imagens/midia_7.webp' },
+                    { name: 'Imagem 3D 7', url: 'assets/galleria/imagens/midia_8.webp' },
+                    { name: 'Imagem 3D 8', url: 'assets/galleria/imagens/midia_9.webp' },
+                    { name: 'Imagem 3D 9', url: 'assets/galleria/imagens/midia_10.webp' },
+                    { name: 'Imagem 3D 10', url: 'assets/galleria/imagens/midia_11.webp' },
+                    { name: 'Imagem 3D 11', url: 'assets/galleria/imagens/midia_12.webp' }
+                ],
+                plantas: Array.from({length: 27}, (_, i) => ({ name: `Planta / Implantação ${i+1}`, url: `assets/galleria/plantas-implantacao/midia_${i+13}.jpg` }))
+            },
+            'pilarys': {
+                title: 'Pilarys Jd. Guedala',
+                filme: '#',
+                book: [
+                    { name: 'Book Pilarys', url: 'assets/pilarys/book/book-pilarys.pdf' }
+                ],
+                ficha: [
+                    { name: 'Ficha Cadastral T3', url: 'assets/pilarys/ficha-docs/ficha-cadastral-t3.pdf' }
+                ],
+                tabela: [
+                    { name: 'Tabela Pilarys', url: 'assets/pilarys/tabela/tabela-pillares.pdf' }
+                ],
+                imagens: [
+                    { name: 'Imagem 3D 1', url: 'assets/pilarys/imagens/midia_2.webp' },
+                    { name: 'Imagem 3D 2', url: 'assets/pilarys/imagens/midia_3.webp' },
+                    { name: 'Imagem 3D 3', url: 'assets/pilarys/imagens/midia_4.webp' },
+                    { name: 'Imagem 3D 4', url: 'assets/pilarys/imagens/midia_5.webp' },
+                    { name: 'Imagem 3D 5', url: 'assets/pilarys/imagens/midia_6.webp' },
+                    { name: 'Imagem 3D 6', url: 'assets/pilarys/imagens/midia_10.webp' }
+                ],
+                plantas: [
+                    { name: 'Planta / Implantação 1', url: 'assets/pilarys/plantas-implantacao/midia_7.webp' },
+                    { name: 'Planta / Implantação 2', url: 'assets/pilarys/plantas-implantacao/midia_8.webp' },
+                    { name: 'Planta / Implantação 3', url: 'assets/pilarys/plantas-implantacao/midia_9.webp' }
+                ]
+            },
+            'vila-parque': {
+                title: 'Vila Parque Butantã',
+                filme: '#',
+                book: [
+                    { name: 'Book Vila Parque', url: 'assets/vila-parque/book/book-vila-parque.pdf' }
+                ],
+                ficha: [
+                    { name: 'Convenção de Condomínio', url: 'assets/vila-parque/ficha-docs/convencao-condominio-vital.pdf' },
+                    { name: 'Memória de Incorporação', url: 'assets/vila-parque/ficha-docs/memoria-de-incorporacao-condominio-vital.pdf' },
+                    { name: 'Ficha Cadastral T3', url: 'assets/vila-parque/ficha-docs/ficha-cadastral-t3.pdf' }
+                ],
+                tabela: [
+                    { name: 'Tabela Villa Parque', url: 'assets/vila-parque/tabela/tabela-villa-parque.pdf' }
+                ],
+                imagens: [
+                    { name: 'Fachada Aérea', url: 'assets/vila-parque/imagens/fachada-aerea-vila-parque.jpg' },
+                    { name: '32m² Quarto', url: 'assets/vila-parque/imagens/32m2-quarto.jpg' },
+                    { name: '52m² Living', url: 'assets/vila-parque/imagens/52m2-living.jpg' },
+                    { name: '52m² Suíte', url: 'assets/vila-parque/imagens/52m2-suite.jpg' },
+                    { name: '79m² Living', url: 'assets/vila-parque/imagens/79m2-living.jpg' },
+                    { name: '79m² Suíte', url: 'assets/vila-parque/imagens/79m2-suite.jpg' },
+                    { name: '79m² Terraço', url: 'assets/vila-parque/imagens/79m2-terraco.jpg' }
+                ],
+                plantas: [
+                    { name: 'Implantação Torre Morato Studios', url: 'assets/vila-parque/plantas-implantacao/implantacao-torre-morato-studios.jpg' },
+                    { name: 'Prumada Torre Morato', url: 'assets/vila-parque/plantas-implantacao/prumada-torre-morato.jpg' },
+                    { name: 'Planta 25m² Studio', url: 'assets/vila-parque/plantas-implantacao/25m2-studio.jpg' },
+                    { name: 'Planta 25m²', url: 'assets/vila-parque/plantas-implantacao/25m2.jpg' },
+                    { name: 'Planta 26m² (Final 4-8)', url: 'assets/vila-parque/plantas-implantacao/26m2-final-4-8.jpg' },
+                    { name: 'Planta 27m² (Final 5-9)', url: 'assets/vila-parque/plantas-implantacao/27m2-final-5-9.jpg' },
+                    { name: 'Planta 30m² (Final 10)', url: 'assets/vila-parque/plantas-implantacao/30m2-final-10.jpg' },
+                    { name: 'Planta 32m² 1 Dorm', url: 'assets/vila-parque/plantas-implantacao/32m2-1-dorm.jpg' },
+                    { name: 'Planta 33m² (Final 3-11)', url: 'assets/vila-parque/plantas-implantacao/33m2-final-3-11.jpg' },
+                    { name: 'Planta 33m² (Final 6)', url: 'assets/vila-parque/plantas-implantacao/33m2-final-6.jpg' },
+                    { name: 'Planta 33m² (Final 7)', url: 'assets/vila-parque/plantas-implantacao/33m2-final-7.jpg' },
+                    { name: 'Planta 38m² (Final 12-13)', url: 'assets/vila-parque/plantas-implantacao/38m2-final-12-13.jpg' },
+                    { name: 'Planta 39m² (Final 2)', url: 'assets/vila-parque/plantas-implantacao/39m2-final-2.jpg' },
+                    { name: 'Planta 41m² (Final 1)', url: 'assets/vila-parque/plantas-implantacao/41m2-final-1.jpg' },
+                    { name: 'Planta 79m² (Final 1-3)', url: 'assets/vila-parque/plantas-implantacao/79m2-final-1-3.jpg' },
+                    { name: 'Planta 79m² (Final 2-4)', url: 'assets/vila-parque/plantas-implantacao/79m2-final-2-4.jpg' }
+                ]
+            },
+            'vista': {
+                title: 'Vista Jd. Guedala',
+                filme: '#',
+                book: [
+                    { name: 'Book Vista Jardim Guedala', url: 'assets/vista/book/book-vista-jardim-guedala.pdf' }
+                ],
+                ficha: [
+                    { name: 'Ficha Cadastral T3', url: 'assets/vista/ficha-docs/ficha-cadastral-t3.pdf' }
+                ],
+                tabela: [
+                    { name: 'Tabela Vista', url: 'assets/vista/tabela/tabela-vista.pdf' }
+                ],
+                imagens: Array.from({length: 16}, (_, i) => ({ name: `Imagem 3D ${i+1}`, url: `assets/vista/imagens/midia_${i+2}.webp` })),
+                plantas: [
+                    { name: 'Planta / Implantação 1', url: 'assets/vista/plantas-implantacao/midia_18.webp' },
+                    { name: 'Planta / Implantação 2', url: 'assets/vista/plantas-implantacao/midia_19.webp' },
+                    { name: 'Planta / Implantação 3', url: 'assets/vista/plantas-implantacao/midia_20.webp' }
+                ]
+            },
+            'yellow': {
+                title: 'Yellow SP Jd. Guedala',
+                filme: '#',
+                book: [],
+                ficha: [
+                    { name: 'Ficha Cadastral T3', url: 'assets/yellow/ficha-docs/ficha-cadastral-t3.pdf' }
+                ],
+                tabela: [],
+                imagens: [
+                    { name: 'Espaço Gourmet', url: 'assets/yellow/imagens/espaco-gourmet.jpg' },
+                    { name: 'Fachada', url: 'assets/yellow/imagens/fachada.jpg' },
+                    { name: 'Quadra', url: 'assets/yellow/imagens/quadra.jpg' }
+                ],
+                plantas: Array.from({length: 23}, (_, i) => ({ name: `Planta / Implantação ${i+1}`, url: `assets/yellow/plantas-implantacao/midia_${i+11}.jpg` }))
+            }
+        };
+
+        function isImage(url) {
+            return url.match(/\.(jpg|jpeg|png|webp)$/i);
+        }
+
+        function openModal(url) {
+            document.getElementById('modal-img').src = url;
+            document.getElementById('image-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('image-modal').classList.add('hidden');
+            document.getElementById('modal-img').src = '';
+        }
+
+        function openProject(key) {
+            currentProjectKey = key;
+            const data = projectsData[key];
+            if (!data) return;
+
+            document.getElementById('project-title').innerText = data.title;
+            document.getElementById('link-wsp').href = `https://wa.me/${meuWhatsapp}?text=Olá,%20tenho%20interesse%20no%20empreendimento%20${encodeURIComponent(data.title)}`;
+            
+            const btnFilme = document.getElementById('link-filme');
+            if (data.filme && data.filme !== '#') {
+                btnFilme.href = data.filme;
+                btnFilme.style.display = 'flex';
+            } else {
+                btnFilme.style.display = 'none';
+            }
+
+            document.getElementById('view-home').classList.add('hidden');
+            document.getElementById('view-project').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function handleCategory(category) {
+            const data = projectsData[currentProjectKey];
+            if (!data || !data[category]) return;
+
+            const files = data[category];
+
+            if (files.length === 0) {
+                alert('Material em breve para este empreendimento!');
+                return;
+            }
+
+            if (files.length === 1) {
+                if (isImage(files[0].url)) {
+                    openModal(files[0].url);
+                } else {
+                    window.open(files[0].url, '_blank');
+                }
+                return;
+            }
+
+            const sublistContainer = document.getElementById('files-list');
+            sublistContainer.innerHTML = '';
+
+            const titulos = {
+                'book': 'Books Digitais',
+                'imagens': 'Galeria de Imagens 3D',
+                'plantas': 'Plantas & Implantação',
+                'tabela': 'Tabela de Vendas',
+                'ficha': 'Ficha & Documentos'
+            };
+
+            document.getElementById('sublist-title').innerText = titulos[category] || 'Arquivos';
+
+            files.forEach(file => {
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-file';
+                btn.innerText = `📄 ${file.name}`;
+                btn.onclick = () => {
+                    if (isImage(file.url)) {
+                        openModal(file.url);
+                    } else {
+                        window.open(file.url, '_blank');
+                    }
+                };
+                sublistContainer.appendChild(btn);
+            });
+
+            document.getElementById('view-project').classList.add('hidden');
+            document.getElementById('view-sublist').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function goHome() {
+            document.getElementById('view-project').classList.add('hidden');
+            document.getElementById('view-home').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function goProject() {
+            document.getElementById('view-sublist').classList.add('hidden');
+            document.getElementById('view-project').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
