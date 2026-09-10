@@ -111,6 +111,41 @@
         .hidden {
             display: none !important;
         }
+
+        /* --- ESTILOS DO VISUALIZADOR EM TELA CHEIA (MODAL) --- */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.92);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .modal img {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 8px;
+            object-fit: contain;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.6);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            color: #ffffff;
+            font-size: 38px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10000;
+            line-height: 1;
+        }
     </style>
 </head>
 <body>
@@ -163,6 +198,12 @@
             <div id="files-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
         </div>
 
+    </div>
+
+    <!-- MODAL DE VISUALIZAÇÃO EM TELA CHEIA -->
+    <div id="image-modal" class="modal hidden" onclick="closeModal()">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img id="modal-img" src="" alt="Visualização" onclick="event.stopPropagation()">
     </div>
 
     <script>
@@ -354,6 +395,20 @@
             }
         };
 
+        function isImage(url) {
+            return url.match(/\.(jpg|jpeg|png|webp)$/i);
+        }
+
+        function openModal(url) {
+            document.getElementById('modal-img').src = url;
+            document.getElementById('image-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('image-modal').classList.add('hidden');
+            document.getElementById('modal-img').src = '';
+        }
+
         function openProject(key) {
             currentProjectKey = key;
             const data = projectsData[key];
@@ -387,7 +442,11 @@
             }
 
             if (files.length === 1) {
-                window.open(files[0].url, '_blank');
+                if (isImage(files[0].url)) {
+                    openModal(files[0].url);
+                } else {
+                    window.open(files[0].url, '_blank');
+                }
                 return;
             }
 
@@ -405,12 +464,17 @@
             document.getElementById('sublist-title').innerText = titulos[category] || 'Arquivos';
 
             files.forEach(file => {
-                const a = document.createElement('a');
-                a.className = 'btn btn-file';
-                a.href = file.url;
-                a.target = '_blank';
-                a.innerText = `📄 ${file.name}`;
-                sublistContainer.appendChild(a);
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-file';
+                btn.innerText = `📄 ${file.name}`;
+                btn.onclick = () => {
+                    if (isImage(file.url)) {
+                        openModal(file.url);
+                    } else {
+                        window.open(file.url, '_blank');
+                    }
+                };
+                sublistContainer.appendChild(btn);
             });
 
             document.getElementById('view-project').classList.add('hidden');
