@@ -5,27 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfólio Imobiliário</title>
 
-    <!-- IMPORTAÇÃO DA FONTE MONTSERRAT (GOOGLE FONTS) -->
+    <!-- IMPORTAÇÃO DE FONTES DE ALTO IMPACTO (PLAYFAIR DISPLAY + POPPINS) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         body {
-            /* PALETA AZUL PREMIUM */
-            background: linear-gradient(180deg, #1e3a8a 0%, #0f172a 100%);
+            /* PALETA AZUL PREMIUM NOCTURNE */
+            background: linear-gradient(180deg, #1e3a8a 0%, #0b1329 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: flex-start;
             padding: 20px 15px 40px 15px;
+            font-family: 'Poppins', sans-serif;
         }
 
         .container {
@@ -42,24 +42,29 @@
             margin-bottom: 10px;
         }
 
+        /* TÍTULOS E SOBRETÍTULOS COM FONTE SERIFADA DE LUXO */
         .header h1 {
-            font-size: 19px;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 23px;
             font-weight: 800;
-            letter-spacing: 1.2px;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
+            font-style: italic;
         }
 
         .section-title {
-            color: #ffffff;
-            font-size: 12px;
-            font-weight: 700;
+            font-family: 'Playfair Display', Georgia, serif;
+            color: #93c5fd;
+            font-size: 13px;
+            font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 2px;
             margin: 15px 0 5px 10px;
-            opacity: 0.95;
         }
 
+        /* BOTÕES EM POPPINS ENCORPADA */
         .btn {
+            font-family: 'Poppins', sans-serif;
             background-color: #0f172a;
             color: #ffffff;
             text-decoration: none;
@@ -69,14 +74,14 @@
             font-weight: 700;
             text-align: center;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 1px;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
             transition: transform 0.1s ease, background-color 0.2s ease;
             cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(147, 197, 253, 0.25);
             width: 100%;
         }
 
@@ -104,7 +109,7 @@
         }
 
         .btn-back {
-            background-color: rgba(255, 255, 255, 0.15);
+            background-color: rgba(255, 255, 255, 0.12);
             color: #ffffff;
             margin-bottom: 10px;
             border: 1px solid rgba(255, 255, 255, 0.3);
@@ -216,7 +221,7 @@
     </div>
 
     <script>
-        // ⚠️ INSIRA AQUI O NÚMERO DE WHATSAPP DO NOVO GERENTE (DDD + NÚMERO)
+        // INSIRA AQUI O NÚMERO DE WHATSAPP DO NOVO GERENTE (DDD + NÚMERO)
         const meuWhatsapp = "5511988887777"; 
 
         let currentProjectKey = null;
